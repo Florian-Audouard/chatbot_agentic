@@ -1,0 +1,27 @@
+[project]
+name = "langchain-notebooks"
+version = "0.1.0"
+description = "LangChain core concepts notebooks (OpenRouter)"
+requires-python = ">=3.11"
+dependencies = [
+  "langchain>=1.0",
+  "langchain-core>=0.3",
+  "langgraph>=1.1",
+  "langchain-openrouter>=0.2",
+  "langchain-text-splitters>=0.3",
+  "langchain-community>=0.3",
+  "python-dotenv>=1.0",
+  "pydantic>=2.7",
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "rank-bm25>=0.2.2",
+  "numpy>=1.26",
+  "ipykernel>=6.29",
+  "jupyter>=1.0",
+  "dotenv>=0.9.9",
+]
+
+[tool.uv]
+
+[dependency-groups]
+dev = []
