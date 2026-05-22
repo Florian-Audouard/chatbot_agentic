@@ -10,7 +10,7 @@ dependencies = [
   "langchain-openrouter>=0.2",
   "langchain-text-splitters>=0.3",
   "langchain-community>=0.3",
-  "python-dotenv>=1.0",
+  "pydantic-settings>=2.2",
   "pydantic>=2.7",
   "fastapi>=0.115",
   "uvicorn[standard]>=0.30",
@@ -18,10 +18,17 @@ dependencies = [
   "numpy>=1.26",
   "ipykernel>=6.29",
   "jupyter>=1.0",
-  "dotenv>=0.9.9",
 ]
 
 [tool.uv]
 
 [dependency-groups]
-dev = []
+dev = [
+    "ruff>=0.15.14",
+]
+
+[tool.ruff]
+extend-exclude = [
+  ".venv",
+  "notebooks",
+]

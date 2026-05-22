@@ -38,6 +38,8 @@ uv sync
 uv run uvicorn server.app:app --host 0.0.0.0 --port 8000
 ```
 
+Configuration is loaded via `pydantic-settings` from `.env`.
+
 Then verify:
 
 - `GET http://localhost:8000/v1/models`
