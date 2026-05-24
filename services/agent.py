@@ -4,41 +4,42 @@ from typing import Any
 
 from fastapi import HTTPException
 from langchain.agents import create_agent
-from langchain_openrouter import ChatOpenRouter
+from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.memory import InMemorySaver
 
-from core.settings import Settings
 from tools.math_tool import simple_math
 from tools.weather_tool import get_weather
 
 
-def build_agent_bundle(settings: Settings) -> tuple[Any, InMemorySaver]:
+def build_agent_bundle(
+    *, api_key: str, model: str, base_url: str, temperature: float
+) -> tuple[Any, InMemorySaver]:
     """Construct the agent + checkpointer.
 
-    Stored on `app.state` during lifespan startup.
+    Stateless server: built per-request.
     """
 
-    if not settings.openrouter_api_key:
-        # Defensive: create_app() also checks this.
-        raise HTTPException(
-            status_code=500, detail="OPENROUTER_API_KEY is missing. Add it to .env"
-        )
+    if not api_key:
+        raise HTTPException(status_code=401, detail="Missing API key")
+    if not model:
+        raise HTTPException(status_code=400, detail="Missing model")
+    if not base_url:
+        raise HTTPException(status_code=400, detail="Missing X-Target-URL")
 
-    checkpointer = InMemorySaver()
-    model = ChatOpenRouter(
-        model=settings.openrouter_model,
-        api_key=settings.openrouter_api_key,
-        temperature=settings.openrouter_temperature,
+    chat_model = ChatOpenAI(
+        model=model,
+        api_key=api_key,
+        base_url=base_url,
+        temperature=temperature,
     )
 
     agent = create_agent(
-        model=model,
+        model=chat_model,
         tools=[simple_math, get_weather],
         system_prompt=(
             "You are a concise assistant. Use tools when helpful. "
             "If you use a tool, incorporate the result into the final answer."
         ),
-        checkpointer=checkpointer,
     )
 
-    return agent, checkpointer
+    return agent

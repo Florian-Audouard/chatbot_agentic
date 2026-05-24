@@ -5,15 +5,7 @@ It stays fully offline except for model calls.
 
 ## Quickstart (uv)
 
-1) Create `.env` from the example:
-
-```bash
-copy .env.example .env
-```
-
-2) Fill your OpenRouter key and (optional) model in `.env`.
-
-3) Install and start Jupyter:
+1) Install and start Jupyter:
 
 ```bash
 uv sync
@@ -38,12 +30,15 @@ uv sync
 uv run uvicorn server.app:app --host 0.0.0.0 --port 8000
 ```
 
-Configuration is loaded via `pydantic-settings` from `.env`.
+This server is stateless. Provider base URL and API key are passed per-request:
+
+- `X-Target-URL: <provider base url, including /v1>` (example: `https://openrouter.ai/api/v1`)
+- `Authorization: Bearer <api key>`
 
 Then verify:
 
-- `GET http://localhost:8000/v1/models`
-- `POST http://localhost:8000/v1/chat/completions`
+- `GET http://localhost:8000/v1/models` (returns exactly what the provider returns)
+- `POST http://localhost:8000/v1/chat/completions` (LangChain agent with server-side tools)
 
 ### Tool calls in OpenWebUI
 
@@ -57,6 +52,6 @@ Memory is in-process only (lost on restart). To keep per-chat continuity, config
 
 ## Notes
 
-- Model is selected via `OPENROUTER_MODEL` in `.env`.
+- Model is selected via the request body `model`.
 - The notebooks use only modern LangChain APIs (LCEL + `create_agent`).
 - Persistence uses LangGraph checkpointers (`thread_id`), not deprecated history wrappers.
