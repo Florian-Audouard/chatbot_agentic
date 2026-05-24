@@ -5,13 +5,13 @@ from typing import Any
 from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
-from server.openai_compat.responses import build_models_list
-from server.openai_compat.schemas import (
+from openai_compat.responses import build_models_list
+from openai_compat.schemas import (
     ChatCompletionRequest,
     validate_messages_are_strings,
 )
-from server.openai_compat.service import invoke_non_streaming, stream_openai_sse
-from server.openai_compat.utils import choose_thread_id
+from openai_compat.service import invoke_non_streaming, stream_openai_sse
+from openai_compat.utils import choose_thread_id
 
 
 router = APIRouter()

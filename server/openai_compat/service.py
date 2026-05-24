@@ -7,12 +7,12 @@ from typing import Any
 from fastapi import HTTPException
 from langchain.messages import AIMessage, AIMessageChunk, ToolMessage
 
-from server.openai_compat.tool_blocks import (
+from openai_compat.tool_blocks import (
     extract_assistant_text,
     tool_details_block,
     tool_blocks_from_state,
 )
-from server.openai_compat.utils import now
+from openai_compat.utils import now
 
 
 async def invoke_non_streaming(

@@ -6,7 +6,7 @@ from typing import Any
 
 from langchain.messages import AIMessage, ToolMessage
 
-from server.openai_compat.utils import now
+from openai_compat.utils import now
 
 
 def tool_details_block(

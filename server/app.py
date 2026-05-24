@@ -5,9 +5,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from server.core.settings import get_settings
-from server.openai_compat.router import router as openai_router
-from server.services.agent import build_agent_bundle
+from core.settings import get_settings
+from openai_compat.router import router as openai_router
+from services.agent import build_agent_bundle
 
 
 @asynccontextmanager

@@ -7,9 +7,9 @@ from langchain.agents import create_agent
 from langchain_openrouter import ChatOpenRouter
 from langgraph.checkpoint.memory import InMemorySaver
 
-from server.core.settings import Settings
-from server.tools.math_tool import simple_math
-from server.tools.weather_tool import get_weather
+from core.settings import Settings
+from tools.math_tool import simple_math
+from tools.weather_tool import get_weather
 
 
 def build_agent_bundle(settings: Settings) -> tuple[Any, InMemorySaver]:
